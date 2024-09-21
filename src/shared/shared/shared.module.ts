@@ -1,9 +1,4 @@
-import { Module } from '@nestjs/common';
-import { DrizzleMySqlModule } from '@knaadh/nestjs-drizzle-mysql2';
+import { Module } from "@nestjs/common";
 
-@Module({
-  imports: [
-
-  ],
-})
+@Module({})
 export class SharedModule {}
