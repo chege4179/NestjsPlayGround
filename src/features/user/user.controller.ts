@@ -2,12 +2,12 @@ import {
   Body,
   Controller,
   Get,
-  HttpCode,
+  HttpCode, HttpStatus,
   Param,
   ParseIntPipe,
-  Post,
+  Post, Put,
   UseGuards,
-} from "@nestjs/common";
+} from '@nestjs/common';
 import { UserService } from "./user.service";
 import { CreateUserDto } from "../../shared/dto/create-user-dto";
 
@@ -15,19 +15,30 @@ import { CreateUserDto } from "../../shared/dto/create-user-dto";
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @HttpCode(201)
+  @HttpCode(HttpStatus.CREATED)
   @Post("create")
-  createUser(@Body() dto: CreateUserDto) {
-    return this.userService.createUser(dto);
+  createUser(@Body() payload: CreateUserDto) {
+    return this.userService.createUser(payload);
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get("all")
   getAllUsers() {
     return this.userService.getAllUsers();
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get("delete/:id")
   deleteUser(@Param("id", new ParseIntPipe()) id: number) {
     return this.userService.deleteUserById(id);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Put("update/:id")
+  updateUserById(
+    @Param("id", new ParseIntPipe()) id: number,
+    @Body() payload: CreateUserDto
+  ) {
+    return this.userService.updateUserById(id, payload);
   }
 }

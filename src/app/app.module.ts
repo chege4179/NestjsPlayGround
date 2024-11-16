@@ -5,12 +5,18 @@ import { SharedModule } from "../shared/shared/shared.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { HttpExceptionFilter } from "../shared/filter/http.filter";
 import { APP_FILTER } from "@nestjs/core";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { HttpModule } from "@nestjs/axios";
 
 @Module({
   imports: [
     UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    HttpModule.register({
+      maxRedirects: 3,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -28,8 +34,9 @@ import { APP_FILTER } from "@nestjs/core";
     }),
     SharedModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
+    AppService,
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,

@@ -29,7 +29,7 @@ export class UserService {
       };
     } catch (error) {
       Logger.error(error);
-      throw new BadRequestException(error.response);
+      throw new BadRequestException("An unexpected error has occurred");
     }
   }
 
@@ -39,7 +39,10 @@ export class UserService {
       return {
         users: allUsers,
       };
-    } catch (error) {}
+    } catch (error) {
+      Logger.error(error);
+      throw new BadRequestException("An unexpected error has occurred");
+    }
   }
 
   async deleteUserById(id: number) {
@@ -50,9 +53,28 @@ export class UserService {
         .from(UserEntity)
         .where("id = :id", { id: id })
         .execute();
-      return{
-        msg:"Deleted successfully"
-      }
+      return {
+        msg: "Deleted successfully",
+      };
+    } catch (error) {
+      Logger.error(error);
+      throw new BadRequestException("An unexpected error has occurred");
+    }
+  }
+
+  async updateUserById(id: number, payload: CreateUserDto) {
+    try {
+      await this.userRepository.update(
+        { id: id },
+        { ...payload }
+      );
+      const updatedUser = await this.userRepository.findOne({
+        where: { id: id },
+      });
+      return {
+        msg: "Updated successfully",
+        updatedUser,
+      };
     } catch (e) {
       throw new BadRequestException(e.message ? e.message : e);
     }

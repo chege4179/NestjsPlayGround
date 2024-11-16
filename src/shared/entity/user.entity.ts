@@ -8,7 +8,12 @@ export class UserEntity {
   @Column({ name: `name`, })
   name: string;
 
-
   @Column({ name: `email`})
   email: string;
+
+  @Column({ name:`password`,default:null })
+  password: string;
+
+  @Column({ name:`createdAt`,default:null })
+  createdAt: string;
 }
