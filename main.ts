@@ -3,6 +3,7 @@ import { AppModule } from "./src/app/app.module";
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { json } from "express";
 import { LoggingInterceptor } from "./src/shared/interceptor/logging.interceptor";
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const port = process.env.PORT;
 
@@ -15,6 +16,14 @@ async function bootstrap() {
     })
   );
   app.use(json({ limit: "50mb" }));
+    const config = new DocumentBuilder()
+        .setTitle('Nest Js Playground API')
+        .setDescription('Nest Js Playground description')
+        .setVersion('1.0')
+        .addTag('playground')
+        .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api-docs', app, document);
   await app.listen(port);
 }
 
