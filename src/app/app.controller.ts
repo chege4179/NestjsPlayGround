@@ -18,9 +18,4 @@ export class AppController {
     return await this.appService.helloWorld();
   }
 
-  @HttpCode(HttpStatus.OK)
-  @Post("getVideoUrl")
-  async getVideoUrl(@Body() payload: VideoDto) {
-    return await this.appService.getVideoUrl(payload);
-  }
 }

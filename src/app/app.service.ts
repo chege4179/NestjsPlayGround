@@ -15,21 +15,4 @@ export class AppService {
   async helloWorld() {
     return `Hello World!`;
   }
-
-  async getVideoUrl(payload: VideoDto) {
-    try {
-      const { data } = await firstValueFrom(
-        this.httpService.get<any>(payload.url).pipe(
-          catchError((error: AxiosError) => {
-            Logger.error(error);
-            throw new BadRequestException(error.message);
-          })
-        )
-      );
-      return data;
-    } catch (e) {
-      Logger.error(e);
-      throw new BadRequestException(e);
-    }
-  }
 }
