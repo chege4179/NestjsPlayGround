@@ -20,6 +20,12 @@ export class UserController {
     }
 
     @HttpCode(HttpStatus.OK)
+    @Get('dummy')
+    dummyEndpoint() {
+        return this.userService.findUsers();
+    }
+
+    @HttpCode(HttpStatus.OK)
     @Get('delete/:id')
     deleteUser(@Param('id', new ParseIntPipe()) id: number) {
         return this.userService.deleteUserById(id);

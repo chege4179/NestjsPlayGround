@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-import { UserModule } from '../features/user/user.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SharedModule } from '../shared/shared/shared.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { HttpExceptionFilter } from '../shared/filter/http.filter';
-import { APP_FILTER } from '@nestjs/core';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { HttpModule } from '@nestjs/axios';
+import {Module} from '@nestjs/common';
+import {UserModule} from '../features/user/user.module';
+import {ConfigModule, ConfigService} from '@nestjs/config';
+import {SharedModule} from '../shared/shared/shared.module';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {HttpExceptionFilter} from '../shared/filter/http.filter';
+import {APP_FILTER} from '@nestjs/core';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {HttpModule} from '@nestjs/axios';
 
 @Module({
     imports: [
@@ -15,8 +15,12 @@ import { HttpModule } from '@nestjs/axios';
         ConfigModule.forRoot({
             isGlobal: true,
         }),
-        HttpModule.register({
-            maxRedirects: 3,
+        HttpModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                maxRedirects: configService.get<number>('MAX_REDIRECTS', 4),
+            })
         }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],

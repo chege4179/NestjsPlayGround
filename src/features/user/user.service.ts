@@ -80,4 +80,9 @@ export class UserService {
             throw new BadRequestException(e.message ? e.message : e);
         }
     }
+
+    async findUsers(){
+        const users = await this.userRepository.countBy({ email:"peterkagure@gmail.com" })
+        return { users }
+    }
 }
