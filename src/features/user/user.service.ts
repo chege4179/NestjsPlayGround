@@ -81,8 +81,8 @@ export class UserService {
         }
     }
 
-    async findUsers(){
-        const users = await this.userRepository.countBy({ email:"peterkagure@gmail.com" })
-        return { users }
+    async findUsers() {
+        const [users, count] = await this.userRepository.findAndCountBy({email: "peterkagure@gmail.com"})
+        return {users, count}
     }
 }
