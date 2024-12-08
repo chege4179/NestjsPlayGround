@@ -1,6 +1,6 @@
-import {Controller, Get, HttpCode, HttpStatus, Res} from "@nestjs/common";
+import {Controller, Get, HttpCode, HttpStatus, Param, Res,Header} from "@nestjs/common";
 import {PdfService} from "./pdf.service";
-import { Response } from 'express';
+import {Response} from 'express';
 
 @Controller("pdf")
 export class PdfController {
@@ -9,17 +9,19 @@ export class PdfController {
     ) {
     }
 
+    @Header("Content-Description", "File Transfer")
+    @Header("Content-Type", "application/pdf")
+    @Header("Content-Type", "application/octet-stream")
+    @Header("Content-Type",'application/force-download')
     @HttpCode(HttpStatus.OK)
-    @Get("create")
+    @Get("create/:name")
     async createPdf(
+
+        @Param("name") name: String,
         @Res() response: Response,
     ): Promise<any> {
         const data = await this.pdfService.createPdf()
-        response.setHeader('Content-Description', 'File Transfer');
-        response.setHeader('Content-type', 'application/octet-stream');
-        response.setHeader('Content-type', 'application/pdf');
-        response.setHeader('Content-Type', 'application/force-download');
-        response.setHeader('Content-disposition', 'attachment;filename=report.pdf');
+        response.setHeader('Content-disposition', `attachment;filename=${name}.pdf`);
         response.send(data);
 
     }
