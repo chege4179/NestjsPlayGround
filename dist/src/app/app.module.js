@@ -17,12 +17,14 @@ const core_1 = require("@nestjs/core");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const axios_1 = require("@nestjs/axios");
+const pdf_module_1 = require("../features/pdf/pdf.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             user_module_1.UserModule,
+            pdf_module_1.PdfModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
             }),

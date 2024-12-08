@@ -8,10 +8,12 @@ import {APP_FILTER} from '@nestjs/core';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {HttpModule} from '@nestjs/axios';
+import {PdfModule} from "../features/pdf/pdf.module";
 
 @Module({
     imports: [
         UserModule,
+        PdfModule,
         ConfigModule.forRoot({
             isGlobal: true,
         }),
