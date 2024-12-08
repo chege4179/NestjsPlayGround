@@ -16,7 +16,6 @@ export class PdfController {
     @HttpCode(HttpStatus.OK)
     @Get("create/:name")
     async createPdf(
-
         @Param("name") name: String,
         @Res() response: Response,
     ): Promise<any> {
