@@ -35,7 +35,7 @@ import {PdfModule} from "../features/pdf/pdf.module";
                 password: configService.get('DB_PASSWORD', 'prism'),
                 database: 'postgres',
                 entities: ['dist/src/shared/entity/*.entity.{js,ts}'],
-                logging: ['error'],
+                logging: configService.get("LOGGING_LEVELS").split(","),
             }),
         }),
         SharedModule,

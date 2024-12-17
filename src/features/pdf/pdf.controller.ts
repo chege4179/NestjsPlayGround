@@ -13,17 +13,13 @@ export class PdfController {
     @Header("Content-Type", "application/pdf")
     @Header("Content-Type", "application/octet-stream")
     @Header("Content-Type",'application/force-download')
+    @Header("Content-disposition", "attachment;filename=report.pdf")
     @HttpCode(HttpStatus.OK)
-    @Get("create/:name")
+    @Get("create")
     async createPdf(
-        @Param("name") name: String,
         @Res() response: Response,
     ): Promise<any> {
         const data = await this.pdfService.createPdf()
-        response.setHeader('Content-disposition', `attachment;filename=${name}.pdf`);
         response.send(data);
-
     }
-
-
 }

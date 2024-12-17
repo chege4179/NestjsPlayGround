@@ -19,9 +19,8 @@ let PdfController = class PdfController {
     constructor(pdfService) {
         this.pdfService = pdfService;
     }
-    async createPdf(name, response) {
+    async createPdf(response) {
         const data = await this.pdfService.createPdf();
-        response.setHeader('Content-disposition', `attachment;filename=${name}.pdf`);
         response.send(data);
     }
 };
@@ -30,12 +29,12 @@ __decorate([
     (0, common_1.Header)("Content-Type", "application/pdf"),
     (0, common_1.Header)("Content-Type", "application/octet-stream"),
     (0, common_1.Header)("Content-Type", 'application/force-download'),
+    (0, common_1.Header)("Content-disposition", "attachment;filename=report.pdf"),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    (0, common_1.Get)("create/:name"),
-    __param(0, (0, common_1.Param)("name")),
-    __param(1, (0, common_1.Res)()),
+    (0, common_1.Get)("create"),
+    __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], PdfController.prototype, "createPdf", null);
 PdfController = __decorate([

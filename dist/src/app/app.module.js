@@ -46,7 +46,7 @@ AppModule = __decorate([
                     password: configService.get('DB_PASSWORD', 'prism'),
                     database: 'postgres',
                     entities: ['dist/src/shared/entity/*.entity.{js,ts}'],
-                    logging: ['error'],
+                    logging: configService.get("LOGGING_LEVELS").split(","),
                 }),
             }),
             shared_module_1.SharedModule,

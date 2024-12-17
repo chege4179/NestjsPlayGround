@@ -1,12 +1,5 @@
-import {
-    BadRequestException,
-    HttpStatus,
-    Injectable,
-    Logger,
-} from "@nestjs/common";
+import {BadRequestException, Injectable, Logger,} from "@nestjs/common";
 import {CreateUserDto} from "../../shared/dto/create-user-dto";
-import {HttpService} from "@nestjs/axios";
-import {firstValueFrom} from "rxjs";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {UserEntity} from "../../shared/entity/user.entity";
