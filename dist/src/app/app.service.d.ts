@@ -1,7 +1,7 @@
-import { HttpService } from "@nestjs/axios";
+import Redis from "ioredis";
 export declare class AppService {
-    private readonly httpService;
-    constructor(httpService: HttpService);
+    private readonly redisClient;
+    constructor(redisClient: Redis);
     ping(): Promise<string>;
     helloWorld(): Promise<string>;
 }

@@ -7,20 +7,20 @@ import {UserEntity} from "../../shared/entity/user.entity";
 @Injectable()
 export class UserService {
     constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>
+        // @InjectRepository(UserEntity)
+        // private readonly userRepository: Repository<UserEntity>
     ) {
     }
 
     async createUser(dto: CreateUserDto): Promise<any> {
         try {
-            const newUser = await this.userRepository.save({
-                email: dto.email,
-                name: dto.name,
-            });
-            return {
-                newUser,
-            };
+            // const newUser = await this.userRepository.save({
+            //     email: dto.email,
+            //     name: dto.name,
+            // });
+            // return {
+            //     newUser,
+            // };
         } catch (error) {
             Logger.error(error);
             throw new BadRequestException("An unexpected error has occurred");
@@ -29,10 +29,10 @@ export class UserService {
 
     async getAllUsers() {
         try {
-            const allUsers = await this.userRepository.find();
-            return {
-                users: allUsers,
-            };
+            // const allUsers = await this.userRepository.find();
+            // return {
+            //     users: allUsers,
+            // };
         } catch (error) {
             Logger.error(error);
             throw new BadRequestException("An unexpected error has occurred");
@@ -41,12 +41,12 @@ export class UserService {
 
     async deleteUserById(id: number) {
         try {
-            await this.userRepository
-                .createQueryBuilder()
-                .delete()
-                .from(UserEntity)
-                .where("id = :id", {id: id})
-                .execute();
+            // await this.userRepository
+            //     .createQueryBuilder()
+            //     .delete()
+            //     .from(UserEntity)
+            //     .where("id = :id", {id: id})
+            //     .execute();
             return {
                 msg: "Deleted successfully",
             };
@@ -58,16 +58,16 @@ export class UserService {
 
     async updateUserById(id: number, payload: CreateUserDto) {
         try {
-            await this.userRepository.update(
-                {id: id},
-                {...payload}
-            );
-            const updatedUser = await this.userRepository.findOne({
-                where: {id: id},
-            });
+            // await this.userRepository.update(
+            //     {id: id},
+            //     {...payload}
+            // );
+            // const updatedUser = await this.userRepository.findOne({
+            //     where: {id: id},
+            // });
             return {
                 msg: "Updated successfully",
-                updatedUser,
+                // updatedUser,
             };
         } catch (e) {
             throw new BadRequestException(e.message ? e.message : e);
@@ -75,7 +75,7 @@ export class UserService {
     }
 
     async findUsers() {
-        const [users, count] = await this.userRepository.findAndCountBy({email: "peterkagure@gmail.com"})
-        return {users, count}
+        // const [users, count] = await this.userRepository.findAndCountBy({email: "peterkagure@gmail.com"})
+        // return {users, count}
     }
 }

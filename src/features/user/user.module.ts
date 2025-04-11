@@ -1,15 +1,10 @@
-import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
-import { HttpModule } from '@nestjs/axios';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from '../../shared/entity/user.entity';
+import { Module } from "@nestjs/common";
+import { UserController } from "./user.controller";
+import { UserService } from "./user.service";
+import { SharedModule } from "../../shared/shared/shared.module";
 
 @Module({
-    imports: [
-        HttpModule,
-        TypeOrmModule.forFeature([UserEntity]),
-    ],
+    imports: [SharedModule],
     controllers: [UserController],
     providers: [UserService],
 })

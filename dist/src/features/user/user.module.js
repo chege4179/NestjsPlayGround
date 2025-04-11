@@ -10,17 +10,12 @@ exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_controller_1 = require("./user.controller");
 const user_service_1 = require("./user.service");
-const axios_1 = require("@nestjs/axios");
-const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_1 = require("../../shared/entity/user.entity");
+const shared_module_1 = require("../../shared/shared/shared.module");
 let UserModule = class UserModule {
 };
 UserModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            axios_1.HttpModule,
-            typeorm_1.TypeOrmModule.forFeature([user_entity_1.UserEntity]),
-        ],
+        imports: [shared_module_1.SharedModule],
         controllers: [user_controller_1.UserController],
         providers: [user_service_1.UserService],
     })

@@ -9,14 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_module_1 = require("../features/user/user.module");
-const config_1 = require("@nestjs/config");
 const shared_module_1 = require("../shared/shared/shared.module");
-const typeorm_1 = require("@nestjs/typeorm");
 const http_filter_1 = require("../shared/filter/http.filter");
 const core_1 = require("@nestjs/core");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const axios_1 = require("@nestjs/axios");
 const pdf_module_1 = require("../features/pdf/pdf.module");
 let AppModule = class AppModule {
 };
@@ -25,30 +22,6 @@ AppModule = __decorate([
         imports: [
             user_module_1.UserModule,
             pdf_module_1.PdfModule,
-            config_1.ConfigModule.forRoot({
-                isGlobal: true,
-            }),
-            axios_1.HttpModule.registerAsync({
-                imports: [config_1.ConfigModule],
-                inject: [config_1.ConfigService],
-                useFactory: (configService) => ({
-                    maxRedirects: configService.get('MAX_REDIRECTS', 4),
-                })
-            }),
-            typeorm_1.TypeOrmModule.forRootAsync({
-                imports: [config_1.ConfigModule],
-                inject: [config_1.ConfigService],
-                useFactory: async (configService) => ({
-                    type: 'postgres',
-                    host: configService.get('DB_HOST', 'localhost'),
-                    username: configService.get('DB_USERNAME', ''),
-                    port: configService.get('DB_PORT', 5432),
-                    password: configService.get('DB_PASSWORD', 'prism'),
-                    database: 'postgres',
-                    entities: ['dist/src/shared/entity/*.entity.{js,ts}'],
-                    logging: configService.get("LOGGING_LEVELS").split(","),
-                }),
-            }),
             shared_module_1.SharedModule,
         ],
         controllers: [app_controller_1.AppController],

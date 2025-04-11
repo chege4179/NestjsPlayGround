@@ -8,28 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const user_entity_1 = require("../../shared/entity/user.entity");
 let UserService = class UserService {
-    constructor(userRepository) {
-        this.userRepository = userRepository;
+    constructor() {
     }
     async createUser(dto) {
         try {
-            const newUser = await this.userRepository.save({
-                email: dto.email,
-                name: dto.name,
-            });
-            return {
-                newUser,
-            };
         }
         catch (error) {
             common_1.Logger.error(error);
@@ -38,10 +24,6 @@ let UserService = class UserService {
     }
     async getAllUsers() {
         try {
-            const allUsers = await this.userRepository.find();
-            return {
-                users: allUsers,
-            };
         }
         catch (error) {
             common_1.Logger.error(error);
@@ -50,12 +32,6 @@ let UserService = class UserService {
     }
     async deleteUserById(id) {
         try {
-            await this.userRepository
-                .createQueryBuilder()
-                .delete()
-                .from(user_entity_1.UserEntity)
-                .where("id = :id", { id: id })
-                .execute();
             return {
                 msg: "Deleted successfully",
             };
@@ -67,13 +43,8 @@ let UserService = class UserService {
     }
     async updateUserById(id, payload) {
         try {
-            await this.userRepository.update({ id: id }, Object.assign({}, payload));
-            const updatedUser = await this.userRepository.findOne({
-                where: { id: id },
-            });
             return {
                 msg: "Updated successfully",
-                updatedUser,
             };
         }
         catch (e) {
@@ -81,14 +52,11 @@ let UserService = class UserService {
         }
     }
     async findUsers() {
-        const [users, count] = await this.userRepository.findAndCountBy({ email: "peterkagure@gmail.com" });
-        return { users, count };
     }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.UserEntity)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

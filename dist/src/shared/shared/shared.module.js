@@ -8,10 +8,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SharedModule = void 0;
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
+const axios_1 = require("@nestjs/axios");
+const ioredis_1 = require("@nestjs-modules/ioredis");
 let SharedModule = class SharedModule {
 };
 SharedModule = __decorate([
-    (0, common_1.Module)({})
+    (0, common_1.Module)({
+        imports: [
+            config_1.ConfigModule.forRoot({
+                isGlobal: true
+            }),
+            axios_1.HttpModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    maxRedirects: configService.get("MAX_REDIRECTS", 4)
+                })
+            }),
+            ioredis_1.RedisModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => {
+                    return {
+                        type: "single",
+                        url: configService.getOrThrow("REDIS_URL")
+                    };
+                }
+            })
+        ],
+        exports: [
+            axios_1.HttpModule,
+            ioredis_1.RedisModule
+        ]
+    })
 ], SharedModule);
 exports.SharedModule = SharedModule;
 //# sourceMappingURL=shared.module.js.map
