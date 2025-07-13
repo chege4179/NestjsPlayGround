@@ -1,21 +1,22 @@
-import { Injectable } from "@nestjs/common";
 import { InjectRedis } from "@nestjs-modules/ioredis";
+import { Injectable } from "@nestjs/common";
 import Redis from "ioredis";
 
 @Injectable()
 export class AppService {
   constructor(
-    @InjectRedis()
-    private readonly redisClient: Redis
   ) {
   }
   
   async ping() {
-    return "pong";
+    
+    return `pong `;
   }
   
   async helloWorld() {
-    await this.redisClient.set("name","Peterj")
-    return `Hello World! `;
+    const template = "Dear {name}. Your Age is {age}"
+    return template
+      .replace(/{name}/g, 'Peter',)
+      .replace(/{age}/g,"200000")
   }
 }

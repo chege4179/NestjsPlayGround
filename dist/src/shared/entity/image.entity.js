@@ -9,24 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
-const common_1 = require("@nestjs/common");
-let AppService = class AppService {
-    constructor() {
-    }
-    async ping() {
-        return `pong `;
-    }
-    async helloWorld() {
-        const template = "Dear {name}. Your Age is {age}";
-        return template
-            .replace(/{name}/g, 'Peter')
-            .replace(/{age}/g, "200000");
-    }
+exports.ImageEntity = void 0;
+const typeorm_1 = require("typeorm");
+let ImageEntity = class ImageEntity {
 };
-AppService = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [])
-], AppService);
-exports.AppService = AppService;
-//# sourceMappingURL=app.service.js.map
+__decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)({ name: 'id' }),
+    __metadata("design:type", Number)
+], ImageEntity.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: `imageBase64`, type: 'longtext' }),
+    __metadata("design:type", String)
+], ImageEntity.prototype, "imageBase64", void 0);
+ImageEntity = __decorate([
+    (0, typeorm_1.Entity)('image')
+], ImageEntity);
+exports.ImageEntity = ImageEntity;
+//# sourceMappingURL=image.entity.js.map

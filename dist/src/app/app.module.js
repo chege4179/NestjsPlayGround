@@ -15,6 +15,7 @@ const core_1 = require("@nestjs/core");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const pdf_module_1 = require("../features/pdf/pdf.module");
+const image_module_1 = require("../features/image/image.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -22,6 +23,7 @@ AppModule = __decorate([
         imports: [
             user_module_1.UserModule,
             pdf_module_1.PdfModule,
+            image_module_1.ImageModule,
             shared_module_1.SharedModule,
         ],
         controllers: [app_controller_1.AppController],

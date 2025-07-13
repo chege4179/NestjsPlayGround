@@ -1,6 +1,9 @@
 import { CreateUserDto } from "../../shared/dto/create-user-dto";
+import { UserEntity } from "../../shared/entity/user.entity";
+import { Repository } from "typeorm";
 export declare class UserService {
-    constructor();
+    private readonly userRepository;
+    constructor(userRepository: Repository<UserEntity>);
     createUser(dto: CreateUserDto): Promise<any>;
     getAllUsers(): Promise<void>;
     deleteUserById(id: number): Promise<{

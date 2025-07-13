@@ -1,26 +1,26 @@
 import {BadRequestException, Injectable, Logger,} from "@nestjs/common";
 import {CreateUserDto} from "../../shared/dto/create-user-dto";
+import {UserEntity} from "../../shared/entity/user.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
-import {UserEntity} from "../../shared/entity/user.entity";
 
 @Injectable()
 export class UserService {
     constructor(
-        // @InjectRepository(UserEntity)
-        // private readonly userRepository: Repository<UserEntity>
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>
     ) {
     }
 
     async createUser(dto: CreateUserDto): Promise<any> {
         try {
-            // const newUser = await this.userRepository.save({
-            //     email: dto.email,
-            //     name: dto.name,
-            // });
-            // return {
-            //     newUser,
-            // };
+            const newUser = await this.userRepository.save({
+                email: dto.email,
+                name: dto.name,
+            });
+            return {
+                newUser,
+            };
         } catch (error) {
             Logger.error(error);
             throw new BadRequestException("An unexpected error has occurred");
